@@ -5,20 +5,20 @@ import ReactDOM from 'react-dom';
 const App = () => {
     const kurssi = 'Half Stack -sovelluskehitys'
 
-    const osa1 = {
-        nimi: 'Reactin perusteet',
-        tehtavia: 10
-    }
-
-    const osa2 = {
-        nimi: 'Tiedonvälitys propseilla',
-        tehtavia: 7
-    }
-
-    const osa3 = {
-        nimi: 'Komponenttien tila',
-        tehtavia: 14
-    }
+    const osat = [
+        {
+            nimi: 'Reactin perusteet',
+            tehtavia: 10
+        },
+        {
+            nimi: 'Tiedonvälitys propseilla',
+            tehtavia: 7
+        },
+        {
+            nimi: 'Komponenttien tila',
+            tehtavia: 14
+        }
+    ]
 
     const Otsikko = () => {
         return (
@@ -30,17 +30,24 @@ const App = () => {
 
     const Sisalto = () => {
 
+        const tiedot = osat.map((osa) => osa.nimi + ' ' + osa.tehtavia)
+
         return (
             <div>
-               <p>{osa1.nimi} {osa1.tehtavia}</p>
-               <p>{osa2.nimi} {osa2.tehtavia}</p>
-               <p>{osa3.nimi} {osa3.tehtavia}</p>
+                <p>{tiedot[0]}</p>
+                <p>{tiedot[1]}</p>
+                <p>{tiedot[2]}</p>
             </div>
         )
     }
 
     const Yhteensa = () => {
-        const lukumaara = osa1.tehtavia + osa2.tehtavia + osa3.tehtavia
+
+        function summa(p1, p2, p3) {
+            return p1 + p2 + p3
+        }
+
+        const lukumaara = summa(osat[0].tehtavia, osat[1].tehtavia, osat[2].tehtavia)
 
         return (
             <div>
@@ -52,8 +59,8 @@ const App = () => {
     return (
         <div>
             <Otsikko kurssi={kurssi} />
-            <Sisalto />
-            <Yhteensa />
+            <Sisalto osat={osat} />
+            <Yhteensa osat={osat} />
         </div>
     )
 }
