@@ -1,65 +1,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
-const App = () => {
-    const kurssi = 'Half Stack -sovelluskehitys'
-
-    const osa1 = {
-        nimi: 'Reactin perusteet',
-        tehtavia: 10
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            hyva: 0,
+            neutraali: 0,
+            huono: 0
+        }
     }
 
-    const osa2 = {
-        nimi: 'Tiedonvälitys propseilla',
-        tehtavia: 7
+    annaHyva = () => {
+        this.setState({
+            hyva: this.state.hyva + 1
+        })
     }
 
-    const osa3 = {
-        nimi: 'Komponenttien tila',
-        tehtavia: 14
+    annaNeutraali = () => {
+        this.setState({
+            neutraali: this.state.neutraali + 1
+        })
     }
 
-    const Otsikko = () => {
+    annaHuono = () => {
+        this.setState({
+            huono: this.state.huono + 1
+        })
+    }
+
+    render() {
         return (
             <div>
-                <h1>{kurssi}</h1>
+                <div>
+                    <h1>anna palautetta</h1>
+
+                    <button onClick={this.annaHyva}>Hyvä</button>
+                    <button onClick={this.annaNeutraali}>Neutraali</button>
+                    <button onClick={this.annaHuono}>Huono</button>
+                    
+                    <h1>statistiikka</h1>
+
+                    <div>
+                        <p>Hyvä {this.state.hyva}</p>
+                        <p>Neutraali {this.state.neutraali}</p>
+                        <p>Huono {this.state.huono}</p>
+                    </div>
+                </div>
             </div>
         )
     }
-
-    const Sisalto = () => {
-
-        return (
-            <div>
-               <p>{osa1.nimi} {osa1.tehtavia}</p>
-               <p>{osa2.nimi} {osa2.tehtavia}</p>
-               <p>{osa3.nimi} {osa3.tehtavia}</p>
-            </div>
-        )
-    }
-
-    const Yhteensa = () => {
-        const lukumaara = osa1.tehtavia + osa2.tehtavia + osa3.tehtavia
-
-        return (
-            <div>
-                <p>yhteensä {lukumaara} tehtävää </p>
-            </div>
-        )
-    }
-
-    return (
-        <div>
-            <Otsikko kurssi={kurssi} />
-            <Sisalto />
-            <Yhteensa />
-        </div>
-    )
 }
-
 ReactDOM.render(
     <App />,
     document.getElementById('root')
 );
+
 
