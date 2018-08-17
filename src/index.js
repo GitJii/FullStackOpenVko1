@@ -9,7 +9,7 @@ class App extends React.Component {
             neutraali: 0,
             huono: 0,
             summa: 0,
-            arivoidenlkm: 0
+            arvioidenlkm: 0
         }
     }
 
@@ -18,7 +18,7 @@ class App extends React.Component {
             this.setState({
                 hyva: this.state.hyva + 1,
                 summa: this.state.summa + 1,
-                arivoidenlkm: this.state.arivoidenlkm + 1
+                arvioidenlkm: this.state.arvioidenlkm + 1
             })
         }
     }
@@ -28,7 +28,7 @@ class App extends React.Component {
             this.setState({
                 neutraali: this.state.neutraali + 1,
                 summa: this.state.summa + 0,
-                arivoidenlkm: this.state.arivoidenlkm + 1
+                arvioidenlkm: this.state.arvioidenlkm + 1
             })
         }
     }
@@ -38,15 +38,27 @@ class App extends React.Component {
             this.setState({
                 huono: this.state.huono + 1,
                 summa: this.state.summa - 1,
-                arivoidenlkm: this.state.arivoidenlkm + 1
+                arvioidenlkm: this.state.arvioidenlkm + 1
             })
         }
     }
-    keskiarvo = () => {
-        return this.state.summa / this.state.arivoidenlkm
-    }
 
     render() {
+
+        const tulokset = () => {            
+            if (this.state.arvioidenlkm === 0) {
+                return (
+                    <div>
+                        <em>Anna arvostelu niin näet, mitä muut ovat äänestäneet</em>
+                    </div>
+                )
+            }
+            return (
+                <div>
+                    <Statistics tila ={this.state}/>
+                </div>
+            )
+        }
         return (
             <div>
                 <div>
@@ -66,24 +78,31 @@ class App extends React.Component {
 
                     <h1>statistiikka</h1>
 
-                    <div>
-                        
-                        
-                        {Statistic ({ teksti: 'Hyvä', tulos: this.state.hyva}) }
-                        
-                        
-                        
-                        <p>Hyvä {this.state.hyva}</p>
-                        <p>Neutraali {this.state.neutraali}</p>
-                        <p>Huono {this.state.huono}</p>
-                        <p>keskiarvo {this.keskiarvo()}</p>
-                        <p>positiivisia {100 * (this.state.hyva / this.state.arivoidenlkm)} %</p>
-                    </div>
+                    {tulokset()}
+
                 </div>
             </div>
         )
     }
 }
+
+const Statistics = (props) => {
+    const tilat = props.tila
+    const keskiarvo = tilat.summa / tilat.arvioidenlkm
+    const positiivisia = 100 * (tilat.hyva / tilat.arvioidenlkm) + '%'
+
+    return (
+        <div>
+            <Statistic teksti='Hyvä ' tulos={tilat.hyva} />
+            <Statistic teksti='Neutraali ' tulos={tilat.neutraali} />
+            <Statistic teksti='Huono ' tulos={tilat.huono} />
+
+            <Statistic teksti='Keskiarvo ' tulos={keskiarvo} />
+            <Statistic teksti='Positiivisia ' tulos={positiivisia} />
+        </div>
+    )
+}
+
 
 const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>
@@ -91,14 +110,8 @@ const Button = ({ handleClick, text }) => (
     </button>
 )
 
-const Statistics = () => (
-    <p>Statistiikka</p>
-)
-
-const Statistic = (teksti, tulos) => {
-    return  () => {
-        <p>{teksti} {tulos}</p>
-    }
+const Statistic = (props) => {
+    return <p>{props.teksti} {props.tulos}</p>
 }
 
 ReactDOM.render(
