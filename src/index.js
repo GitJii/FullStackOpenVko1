@@ -62,7 +62,7 @@ class App extends React.Component {
         return (
             <div>
                 <div>
-                    <h1>Anna palautetta</h1>
+                    <h1>anna palautetta</h1>
 
                     <Button handleClick={this.annaHyva()}
                         text="Hyvä"
