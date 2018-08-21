@@ -94,9 +94,8 @@ const Statistic = (props) => {
         <table>
             <tbody>
                 <tr>
-                    <td>{props.teksti}</td>
-                    <td width="5%">{' '}</td>
-                    <td>{props.tulos}</td>
+                    <td width="70" >{props.teksti}</td>
+                    <td width="70" >{props.tulos}</td>
                 </tr>
             </tbody>
         </table>
