@@ -91,11 +91,15 @@ const Button = ({ handleClick, text }) => (
 
 const Statistic = (props) => {
     return (
-        <tr>
-            <td>{props.teksti}</td>
-            <td width="5%">{' '}</td>
-            <td>{props.tulos}</td>
-        </tr>
+        <table>
+            <tbody>
+                <tr>
+                    <td>{props.teksti}</td>
+                    <td width="5%">{' '}</td>
+                    <td>{props.tulos}</td>
+                </tr>
+            </tbody>
+        </table>
     )
 }
 
