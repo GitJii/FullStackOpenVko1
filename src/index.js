@@ -13,31 +13,11 @@ class App extends React.Component {
         }
     }
 
-    annaHyva = () => {
+    annaArvio = (tila, arvo) => {
         return () => {
             this.setState({
-                hyva: this.state.hyva + 1,
-                summa: this.state.summa + 1,
-                arvioidenlkm: this.state.arvioidenlkm + 1
-            })
-        }
-    }
-
-    annaNeutraali = () => {
-        return () => {
-            this.setState({
-                neutraali: this.state.neutraali + 1,
-                summa: this.state.summa + 0,
-                arvioidenlkm: this.state.arvioidenlkm + 1
-            })
-        }
-    }
-
-    annaHuono = () => {
-        return () => {
-            this.setState({
-                huono: this.state.huono + 1,
-                summa: this.state.summa - 1,
+                [tila]: this.state[tila] + 1,
+                summa: this.state.summa + arvo,
                 arvioidenlkm: this.state.arvioidenlkm + 1
             })
         }
@@ -45,7 +25,7 @@ class App extends React.Component {
 
     render() {
 
-        const tulokset = () => {            
+        const tulokset = () => {
             if (this.state.arvioidenlkm === 0) {
                 return (
                     <div>
@@ -55,7 +35,7 @@ class App extends React.Component {
             }
             return (
                 <div>
-                    <Statistics tila ={this.state}/>
+                    <Statistics tila={this.state} />
                 </div>
             )
         }
@@ -64,15 +44,15 @@ class App extends React.Component {
                 <div>
                     <h1>anna palautetta</h1>
 
-                    <Button handleClick={this.annaHyva()}
+                    <Button handleClick={this.annaArvio('hyva', 1)}
                         text="Hyvä"
                     ></Button>
 
-                    <Button handleClick={this.annaNeutraali()}
+                    <Button handleClick={this.annaArvio('neutraali', 0)}
                         text="Neutraali"
                     ></Button>
 
-                    <Button handleClick={this.annaHuono()}
+                    <Button handleClick={this.annaArvio('huono', - 1)}
                         text="Huono"
                     ></Button>
 
@@ -88,8 +68,8 @@ class App extends React.Component {
 
 const Statistics = (props) => {
     const tilat = props.tila
-    const keskiarvo = tilat.summa / tilat.arvioidenlkm
-    const positiivisia = 100 * (tilat.hyva / tilat.arvioidenlkm) + '%'
+    const keskiarvo = (tilat.summa / tilat.arvioidenlkm).toFixed(1)
+    const positiivisia = (100 * (tilat.hyva / tilat.arvioidenlkm)).toFixed(1) + ' %'
 
     return (
         <div>
@@ -110,7 +90,13 @@ const Button = ({ handleClick, text }) => (
 )
 
 const Statistic = (props) => {
-    return <p>{props.teksti} {props.tulos}</p>
+    return (
+        <tr>
+            <td>{props.teksti}</td>
+            <td width="5%">{' '}</td>
+            <td>{props.tulos}</td>
+        </tr>
+    )
 }
 
 ReactDOM.render(
